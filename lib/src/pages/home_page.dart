@@ -72,13 +72,11 @@ class _HomePageState extends State<HomePage> {
     //geo:4.3113515,-74.8105908,14
     String futureString = '';
 
-    try {
+/*     try {
       await Permission.camera.request();
       futureString = await scanner.scan();
     } catch (e) {
       futureString = e.toString();
-    }
-
-    print('tenemos informacion $futureString');
+    } */
   }
 }
