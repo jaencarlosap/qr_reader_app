@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:qrreaderapp/src/bloc/scan_bloc.dart';
+import 'package:qrreaderapp/src/models/scan_model.dart';
+
 import 'package:qrreaderapp/src/pages/address_page.dart';
 import 'package:qrreaderapp/src/pages/maps_page.dart';
 
-import 'package:permission_handler/permission_handler.dart';
+import 'package:qrreaderapp/src/utils/utils.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -14,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scansBloc = new ScanBloc();
+
   int currentIndex = 0;
 
   @override
@@ -23,7 +29,9 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text('Qr Scanner'),
         actions: [
-          IconButton(icon: Icon(Icons.delete_forever), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.delete_forever),
+              onPressed: () => scansBloc.deleteAllScan())
         ],
       ),
       body: _callPage(currentIndex),
@@ -63,14 +71,16 @@ class _HomePageState extends State<HomePage> {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus_outlined),
       backgroundColor: Theme.of(context).primaryColor,
-      onPressed: _scanQR,
+      onPressed: () => _scanQR(context),
     );
   }
 
-  _scanQR() async {
+  _scanQR(BuildContext context) async {
     //https://github.com/janper231
     //geo:4.3113515,-74.8105908,14
-    String futureString = '';
+
+    // String futureString = '';
+    String futureString = 'https://github.com/janper231';
 
 /*     try {
       await Permission.camera.request();
@@ -78,5 +88,15 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       futureString = e.toString();
     } */
+
+    if (futureString != null) {
+      final scan = ScanModel(value: futureString);
+      scansBloc.addScan(scan);
+
+      final scan2 = ScanModel(value: 'geo:4.3113515,-74.8105908,14');
+      scansBloc.addScan(scan2);
+
+      launchURL(context, scan);
+    }
   }
 }
