@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage> {
         });
       },
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Mapa'),
-        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Mapa'),
+        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
+        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Address'),
       ],
     );
   }
@@ -79,24 +79,23 @@ class _HomePageState extends State<HomePage> {
     //https://github.com/janper231
     //geo:4.3113515,-74.8105908,14
 
-    // String futureString = '';
-    String futureString = 'https://github.com/janper231';
+    String futureString = '';
+    // String futureString = 'https://github.com/janper231';
 
-/*     try {
+    try {
       await Permission.camera.request();
       futureString = await scanner.scan();
     } catch (e) {
       futureString = e.toString();
-    } */
+    }
 
     if (futureString != null) {
       final scan = ScanModel(value: futureString);
       scansBloc.addScan(scan);
 
-      final scan2 = ScanModel(value: 'geo:4.3113515,-74.8105908,14');
-      scansBloc.addScan(scan2);
-
-      launchURL(context, scan);
+      Future.delayed(Duration(milliseconds: 800), () {
+        launchURL(context, scan);
+      });
     }
   }
 }

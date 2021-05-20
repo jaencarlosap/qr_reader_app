@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qrreaderapp">
+    <!-- access to device- start -->
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- access to device- end -->
    <application
         android:label="qrreaderapp"
         android:icon="@mipmap/ic_launcher">

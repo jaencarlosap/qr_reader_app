@@ -10,6 +10,8 @@ class MapsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    scansBloc.getScans();
+
     return StreamBuilder<List<ScanModel>>(
       stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
@@ -32,7 +34,7 @@ class MapsPage extends StatelessWidget {
             child: ListTile(
               onTap: () => launchURL(context, scans[i]),
               leading: Icon(
-                Icons.cloud_queue,
+                Icons.map_outlined,
                 color: Theme.of(context).primaryColor,
               ),
               title: Text(scans[i].value),
